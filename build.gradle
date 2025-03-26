@@ -1,0 +1,52 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.4'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.axoniq.io/releases' } // Add Axon repository
+	maven {
+		url 'https://repo.axoniq.io/repository/axon-releases/'
+	}
+}
+
+
+dependencies {
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+//	implementation 'org.axonframework:axon-spring-boot-starter:4.9.2'  // Core Axon
+	implementation 'org.springframework.boot:spring-boot-starter-web'  // REST API
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA for projections
+	implementation 'org.axonframework:axon-configuration:4.9.2' // Axon Configurations
+	implementation 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+	// For Spring Boot projects, also include:
+	compileOnly 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	implementation("io.netty:netty-all:4.1.118.Final")
+	// https://mvnrepository.com/artifact/io.axoniq/axonserver-connector-java
+	implementation("io.axoniq:axonserver-connector-java:2023.0.0")
+
+	implementation ('org.axonframework:axon-spring-boot-starter:4.9.2') {
+		exclude group: 'org.axonframework', module: 'axonserver-connector-java'
+	}
+//	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter:4.9.2' // Axon with Kafka (Optional)
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=axon
+    networks:
+      - axon-demo
+
+  axonserver:
+    image: axoniq/axonserver:latest
+    container_name: axonserver
+    ports:
+      - "8024:8024"  # Default Axon Server HTTP port
+      - "8124:8124"  # Default Axon Server gRPC port
+      # environment:
+      #   - AXONIQ_AXONSERVER_NAME=axon-demo
+      # - AXONIQ_AXONSERVER_TOKEN= my_demo_token
+#    volumes:
+#      - axonserver_data:/var/lib/axonserver
+    environment:
+      - axoniq.axonserver.replication-group.default.enabled=true
+    restart: always
+    networks:
+      - axon-demo
+
+#volumes:
+#  axonserver_data:
+#    driver: local
+
+networks:
+  axon-demo:
