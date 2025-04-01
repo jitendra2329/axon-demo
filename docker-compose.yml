@@ -14,7 +14,7 @@ services:
       - axon-demo
 
   axonserver:
-    image: axoniq/axonserver:latest
+    image: axoniq/axonserver:2024.2.4
     container_name: axonserver
     ports:
       - "8024:8024"  # Default Axon Server HTTP port
@@ -25,7 +25,7 @@ services:
 #    volumes:
 #      - axonserver_data:/var/lib/axonserver
     environment:
-      - axoniq.axonserver.replication-group.default.enabled=true
+      - axoniq.axonserver.replication-group.default.enabled=false
     restart: always
     networks:
       - axon-demo

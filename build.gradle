@@ -39,7 +39,7 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 	implementation("io.netty:netty-all:4.1.118.Final")
 	// https://mvnrepository.com/artifact/io.axoniq/axonserver-connector-java
-	implementation("io.axoniq:axonserver-connector-java:2023.0.0")
+	implementation("io.axoniq:axonserver-connector-java:2024.2.2")
 
 	implementation ('org.axonframework:axon-spring-boot-starter:4.9.2') {
 		exclude group: 'org.axonframework', module: 'axonserver-connector-java'
